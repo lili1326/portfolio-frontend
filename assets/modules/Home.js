@@ -1,9 +1,6 @@
-//import bib github https://github.com/octokit/octokit.js
+ //import bib github https://github.com/octokit/octokit.js
 //avec la partie getReposInformation
 import { Octokit, App } from "https://esm.sh/octokit";
- 
-
-
 
 class Home {
     constructor() {
@@ -19,22 +16,14 @@ class Home {
     }
 
     init() {
-        //Récupérer les info du profil depuis l api
         this.getUserInformations();
-        //récupérer les infos du repo depuis l api
-        this .getReposInformations();
-        
+        this.getReposInformations();
     }
 
     getUserInformations() {
-        //API ex 1 récupérer le contenu avec un fetch
         fetch("https://api.github.com/users/lili1326")
             .then((response) => response.json())
             .then((data) => {
-                //console.log(data);
-                //afficher la descristion de mon profil github
-                //afficher l url de mon profilt github
-                //afficher mon avatar 
                 this.descriptionHTML.textContent = data.bio;
                 this.profilHTML.href = data.html_url;
                 this.profilHTML.textContent = data.html_url;
@@ -45,42 +34,39 @@ class Home {
             });
     }
 
+    async getReposInformations() {
+        const octokit = new Octokit();
 
-    //API ex 2 récupérer le contenu avec Oktokit JS avec=> away /async
-    async getReposInformations(){
-        
-        //console.log(this.projectsTitle)
-        //console.log(this.projectsDescription)
-        //console.log(this.projectsTagsContainer)
-       // console.log(Octokit)
-        // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
-        //https://api.github.com/users/lili1326/repos"  
-        const octokit = new Octokit( );
-        //je stock la réponse
-        const response = await octokit
-        .request("GET /users/lili1326/repos")
-        .catch((error) => {
-            console.log("Erreur lors de l'appel de l'API getReposInformations", error)
-        })
-        //console.log(response) // contient les infos sur les dépôts
-       // const data = response.data
-        //console.log(data)
-        //console.log(response.status)
-        this.updateHTMLProjects(response.data)      
+        try {
+            const response = await octokit.request("GET /users/lili1326/repos");
+            await this.updateHTMLProjects(response.data);
+        } catch (error) {
+            console.log("Erreur lors de l'appel de l'API getReposInformations", error);
+        }
     }
 
-        updateHTMLProjects(projects){
-            let htmlIndex = 0
-            for(let i= 0 ; i<3; i++){
-                const infos =projects[i]
-                console.log(infos)
-                this.projectsTitle[htmlIndex].textContent=infos.name
-                this.projectsDescription[htmlIndex].textContent = infos.description
-                const languages = infos.topics
-            htmlIndex++
-             
+    async updateHTMLProjects(projects) {
+        let htmlIndex = 0;
+
+        for (let i = 0; i < 3 && i < projects.length; i++) {
+            const infos = projects[i];
+            console.log(infos);
+
+            this.projectsTitle[htmlIndex].textContent = infos.name;
+            this.projectsDescription[htmlIndex].textContent = infos.description;
+
+            try {
+                const languages = await fetch(infos.languages_url).then(res => res.json());
+                const tags = Object.keys(languages).join(", ");
+                this.projectsTagsContainer[htmlIndex].textContent = tags;
+            } catch (err) {
+                console.error("Erreur lors de la récupération des languages:", err);
+                this.projectsTagsContainer[htmlIndex].textContent = "Langages non disponibles";
             }
+
+            htmlIndex++;
         }
+    }
 }
 
 // Export de la classe

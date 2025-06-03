@@ -1,86 +1,102 @@
-# portfolio-frontend
+# Portfolio Développeuse Web – Aurélie
+
+Bienvenue sur mon portfolio web, conçu pour présenter mes compétences en développement et mettre en valeur mes projets GitHub de manière dynamique.
+
+---
 
 ## Objectif du projet
 
-Ce projet consiste à créer une interface web qui interagit avec l'API GitHub pour afficher dynamiquement :
+Ce projet a été réalisé dans le cadre de ma formation/dossier professionnel pour démontrer ma capacité à :
 
-Le profil d'un utilisateur (bio, avatar, lien)
+- Développer une **interface web dynamique**
+- Utiliser **JavaScript natif (ES6)** pour manipuler le **DOM**
+- Consommer une **API externe (GitHub REST API)**
+- Générer dynamiquement une interface en fonction des données
+- Appliquer une **structuration propre du code** avec des classes JavaScript
 
-Les trois derniers dépôts publics
-
-Les langages utilisés dans chaque projet
+---
 
 ## Technologies utilisées
 
-HTML5 / CSS3
+- **HTML5**
+- **CSS3**
+- **JavaScript ES6**
+- **Fetch API**
+- **GitHub Public API**
+- Aucun framework (React, Vue…) n’a été utilisé volontairement.
 
-JavaScript (ES6+)
-
-API GitHub REST
-
-Octokit (Client GitHub officiel)
-
-Fetch API
-
-Modules ES (import/export)
+---
 
 ## Structure du projet
 
-src/
-│ ├── index.html
-│ ├── style.css
-│ └── home.js # Fichier contenant la classe Home (logique principale)
+```bash
+portfolio-frontend/
+│
+├── index.html               # Page d’accueil dynamique
+├── tous-mes-projets.html    # Liste complète des projets GitHub
+├── projet.html              # Redirection automatique vers GitHub
+│
+├── assets/
+│   ├── styles/
+│   │   └── styles.css       # Feuille de style principale
+│   ├── icons/               # Icônes SVG (home, GitHub, flèche, etc.)
+│   ├── modules/
+│   │   └── Home.js          # Classe JS principale (DOM + API)
+│   ├── projects.js          # Script de la page 'tous mes projets'
+│   └── app.js               # Point d’entrée JS de l’accueil
+```
 
-## Fonctionnalités principales
+---
 
-Récupération des informations utilisateur depuis l'API GitHub
+## Fonctionnement
 
-Affichage dynamique dans la page web
+### Page `index.html`
 
-Chargement des projets avec noms, descriptions et langages utilisés
+- Affiche automatiquement :
+  - La bio GitHub, l’avatar, le lien du profil
+  - Les **3 derniers projets triés par date de création**
+  - Les **langages utilisés** (pastilles colorées)
+  - La **date de création** de chaque projet
 
-Gestion des erreurs si les données ne sont pas disponibles
+### Page `tous-mes-projets.html`
 
-Utilisation de async/await pour les appels API
+- Affiche **tous les dépôts publics GitHub**
+- Les projets sont :
+  - Triés du **plus récent au plus ancien**
+  - Affichés avec **description, date, langages colorés**
 
-## Aperçu visuel
+### Page `projet.html`
 
-(Tu peux insérer une capture d'écran de ton site ici en Markdown)
+- Sert de **redirection automatique**
+- Lit `?repo=nomduprojet` dans l’URL
+- Redirige vers : `https://github.com/lili1326/nomduprojet`
 
-![Aperçu du site](./screenshot.png)
+---
 
-## Comment lancer le projet
+## À noter
 
-Cloner ce dépôt :
+- Toutes les données sont récupérées dynamiquement depuis l’API GitHub.
+- Aucun contenu projet n’est codé en dur : tout est généré à partir des dépôts réels.
+- Le code est entièrement en JavaScript natif pour valoriser la **compréhension du DOM et des API**.
 
-git clone https://github.com/toncompte/tonprojet.git
-Ouvrir index.html dans un navigateur moderne
+---
 
-Aucun serveur requis – tout est en JavaScript front-end
+## Lancer le projet en local
 
-## Auteur
+1. Cloner le dépôt ou copier les fichiers localement
+2. Lancer un serveur local (ex. avec VS Code + Live Server)
+3. Ouvrir `index.html` dans le navigateur
 
-Prénom NOM (alias GitHub : @lili1326)
+```bash
+npx serve
+# ou
+php -S localhost:3000
+```
 
-Réalisé dans le cadre du Titre Professionnel DWWM
+---
 
-## Compétences mises en œuvre (TP DWWM)
+## Réalisé par
 
-Compétence Description
-1.4 Développement de la partie dynamique d’une interface utilisateur
-3 Débogage simple avec console, gestion d’erreurs
-5 Documentation du projet et structuration Git
-
-# Ressources
-
-[live server vscode](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-
-- [lien pour authentification avec jeton d acces personnel](https://docs.github.com/en/rest/guides/scripting-with-the-rest-api-and-javascript?apiVersion=2022-11-28#instantiating-and-authenticating)
-- [Octokit Rest.js](https://github.com/octokit/rest.js)
-
-## Ressources
-
-- [import bib github](https://github.com/octokit/octokit.js)
-- [live server vscode](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-- [lien pour authentification avec jeton d acces personnel](https://docs.github.com/en/rest/guides/scripting-with-the-rest-api-and-javascript?apiVersion=2022-11-28#instantiating-and-authenticating)
-- [Octokit Rest.js](https://github.com/octokit/rest.js)
+**Aurélie**  
+Développeuse Full Stack junior  
+[github.com/lili1326](https://github.com/lili1326)

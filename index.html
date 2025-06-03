@@ -1,96 +1,81 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Bienvenue sur mon site: Portfolio de Aurélie</title>
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+    <title>Bienvenue sur mon site: Portfolio de Aurélie</title>
 </head>
 <body>
-     <header>
+    <header>
         <a href="/">
-            <img src="assets/icons/home-line.svg" width="20px"  alt="home">Home
+            <img src="assets/icons/home-line.svg" width="20px" alt="home">Home
         </a>
         <a href="#">
-            <img src="assets/icons/question-line.svg"  alt="une question" width="20px">Poser une question
+            <img src="assets/icons/question-line.svg" alt="une question" width="20px">Poser une question
         </a>
-     </header>
-    
-     <main>
+    </header>
+
+    <main>
         <section>
             <p>Portfolio</p>
             <h1>Hello, je suis Aurélie</h1>
-            <p class="js-home-description">[Partie dynamique]</p>
-            <a href="/tous-mes-projets.html">Voir les projet
-                <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">    
-            </a>
-            <a href="#" class="js-home-profil-url" target="_blank"><!--lien qui sort de mon site-->Accéder a mon Github
-                <img src="assets/icons/github-fill.svg" alt="logo github" width="20px">  
+            <p class="js-home-description"></p>
+             
+            <a href="#" class="js-home-profil-url" target="_blank">
+                Accéder à mon GitHub
+                <img src="assets/icons/github-fill.svg" alt="logo github" width="20px">
             </a>
             <div>
-               <img  class="js-home-avatar"src="[dynamique]" alt=" ocean" width="100px"> 
-               <span>👀</span>
+                <img class="js-home-avatar" src="" alt="avatar GitHub" width="100px">
             </div>
-        </section> 
+        </section>
 
-        <SECtion>   
-            <H2>Mes dernier projets</H2>
+        <section>
             <a href="/tous-mes-projets.html">
                 <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
                 Voir tous mes projets
             </a>
+            <h2>Mes derniers projets</h2>
             <ul>
-               <li>
-                <img src="[dynamique]" alt="">
-                <h3 class="js-home-project-title">[dynamique]</h3>
-                <p class="js-home-project-description">[description]</p>
-                <div class="js-home-project-tags-container">
-                    <span>[tag]</span>
-                    <span>[tag]</span>
-                    <span>[tag]</span>
-                </div>             
-                 <a href="/projet.html"></a>
-                    <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
-                 </a>
-               </li> 
+                <li>
+                    <img src="" alt="">
+                    <h3 class="js-home-project-title"></h3>
+                    <p class="js-home-project-description"></p>
+                    <p class="js-home-project-date"></p>
+                    <div class="js-home-project-tags-container"></div>
+                    <a href="/projet.html">
+                        <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
+                        Voir le projet
+                    </a>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <h3 class="js-home-project-title"></h3>
+                    <p class="js-home-project-description"></p>
+                    <p class="js-home-project-date"></p>
+                    <div class="js-home-project-tags-container"></div>
+                    <a href="/projet.html">
+                        <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
+                        Voir le projet
+                    </a>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <h3 class="js-home-project-title"></h3>
+                    <p class="js-home-project-description"></p>
+                    <p class="js-home-project-date"></p>
+                    <div class="js-home-project-tags-container"></div>
+                    <a href="/projet.html">
+                        <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
+                        Voir le projet
+                    </a>
+                </li>
             </ul>
-            <ul>
-                <li>
-                 <img src="[dynamique]" alt="">
-                 <h3 class="js-home-project-title">[dynamique]</h3>
-                 <p class="js-home-project-description">[description]</p>
-                 <div class="js-home-project-tags-container">
-                     <span>[tag]</span>
-                     <span>[tag]</span>
-                     <span>[tag]</span>
-                 </div>             
-                  <a href="/projet.html"></a>
-                     <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
-                  </a>
-                </li> 
-             </ul>
-             <ul>
-                <li>
-                 <img src="[dynamique]" alt="">
-                 <h3 class="js-home-project-title">[dynamique]</h3>
-                 <p class="js-home-project-description">[description]</p>
-                 <div class="js-home-project-tags-container">
-                     <span>[tag]</span>
-                     <span>[tag]</span>
-                     <span>[tag]</span>
-                 </div>             
-                  <a href="/projet.html"></a>
-                     <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">
-                  </a>
-                </li> 
-             </ul>
-        </SECtion>
+        </section>
+    </main>
 
-
-<!--import bib github https://github.com/octokit/octokit.js-->
-
-<script type="module" src="./assets/app.js">// ← version fetch
-
-</script>
- 
+    <!-- Appel du script -->
+     <script type="module" src="./assets/app.js"></script>
 </body>
 </html>

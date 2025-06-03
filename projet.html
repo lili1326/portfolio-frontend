@@ -1,11 +1,22 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Découvrir le projet: Portfolio de Aurélie</title>
+    <title>Découvrir le projet: Portfolio de Aurélie</title>
 </head>
 <body>
-    <h1>Mon projet </h1>
+    <h1>Mon projet</h1>
+    <script>
+  const params = new URLSearchParams(window.location.search);
+  const repo = params.get('repo');
+  if (repo) {
+    window.location.href = `https://github.com/lili1326/${repo}`;
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.textContent = "Aucun projet sélectionné.";
+    });
+  }
+</script>
 </body>
 </html>

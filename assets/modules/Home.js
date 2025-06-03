@@ -1,93 +1,128 @@
- // On importe la classe Octokit depuis le CDN pour interagir avec l'API GitHub
-import { Octokit, App } from "https://esm.sh/octokit";
-
-// Déclaration de la classe Home
+ // Classe principale responsable de la mise à jour dynamique de l'accueil du portfolio
 class Home {
     constructor() {
-        // Sélection des éléments HTML pour afficher les infos de l’utilisateur GitHub
+        // Sélection des éléments HTML à manipuler (DOM) pour afficher les infos du profil GitHub
         this.descriptionHTML = document.querySelector('.js-home-description');
         this.profilHTML = document.querySelector('.js-home-profil-url');
         this.avatarHTML = document.querySelector('.js-home-avatar');
 
-        // Sélection des éléments HTML pour afficher les projets (titre, description, tags)
+        // Sélection des éléments HTML liés aux projets (titre, description, tags)
         this.projectsTitle = document.querySelectorAll('.js-home-project-title');
         this.projectsDescription = document.querySelectorAll('.js-home-project-description');
         this.projectsTagsContainer = document.querySelectorAll('.js-home-project-tags-container');
 
-        // Appel à la fonction init pour lancer les appels API
+        // Démarrage de l'application
         this.init();
     }
 
-    // Fonction d'initialisation : lance les appels API
+    // Méthode principale appelée au démarrage de l'application
     init() {
-        this.getUserInformations();     // Récupère les infos du profil GitHub
-        this.getReposInformations();    // Récupère les dépôts publics
+        this.getUserInformations();      // Appel de l’API GitHub pour récupérer les infos du profil
+        this.getReposInformations();     // Appel de l’API GitHub pour récupérer les dépôts publics
     }
 
-    // Récupère les informations générales de l’utilisateur GitHub
-    getUserInformations() {
-        fetch("https://api.github.com/users/lili1326")
-            .then((response) => response.json())  // Transforme la réponse en JSON
-            .then((data) => {
-                // Met à jour les éléments HTML avec les données récupérées
-                this.descriptionHTML.textContent = data.bio;
-                this.profilHTML.href = data.html_url;
-                this.profilHTML.textContent = data.html_url;
-                this.avatarHTML.src = data.avatar_url;
-            })
-            .catch((error) => {
-                // Gestion des erreurs en cas d’échec de l’appel API
-                console.error("Erreur lors de l'appel de l'API getUserInformations", error);
-            });
-    }
-
-    // Fonction asynchrone pour récupérer les dépôts GitHub de l’utilisateur
-    async getReposInformations() {
-        const octokit = new Octokit(); // Création d'une instance Octokit
-
+    // Récupération des informations de l’utilisateur GitHub via fetch
+    async getUserInformations() {
         try {
-            // Envoi de la requête GET pour récupérer les dépôts publics de l'utilisateur
-            const response = await octokit.request("GET /users/lili1326/repos");
+            const response = await fetch("https://api.github.com/users/lili1326");
+            if (!response.ok) throw new Error("Erreur HTTP " + response.status);
 
-            // Mise à jour de l’interface avec les projets récupérés
-            await this.updateHTMLProjects(response.data);
+            const data = await response.json();
+
+            // Mise à jour dynamique du DOM avec les données utilisateur
+            this.descriptionHTML.textContent = data.bio;
+            this.profilHTML.href = data.html_url;
+            this.profilHTML.textContent = data.html_url;
+            this.avatarHTML.src = data.avatar_url;
         } catch (error) {
-            // Gestion des erreurs de l’appel API
-            console.log("Erreur lors de l'appel de l'API getReposInformations", error);
+            console.error("Erreur lors de l'appel de l'API getUserInformations :", error);
         }
     }
 
-    // Met à jour les 3 premiers projets dans le HTML
+    // Récupération des 3 derniers dépôts GitHub (classés par date de création, décroissant)
+    async getReposInformations() {
+        try {
+            const response = await fetch("https://api.github.com/users/lili1326/repos?sort=created&direction=desc");
+            if (!response.ok) throw new Error("Erreur HTTP");
+
+            const data = await response.json();
+
+            // Appel de la méthode d'affichage avec les 3 projets les plus récents
+            await this.updateHTMLProjects(data.slice(0, 3));
+        } catch (error) {
+            console.error("Erreur lors de getReposInformations :", error);
+        }
+    }
+
+    // Mise à jour de l’interface avec les projets GitHub
     async updateHTMLProjects(projects) {
-        let htmlIndex = 0;
+        // Sélection des balises pour afficher la date de création
+        const dateElements = document.querySelectorAll('.js-home-project-date');
 
-        // Boucle sur les 3 premiers projets (ou moins si moins de 3)
-        for (let i = 0; i < 3 && i < projects.length; i++) {
-            const infos = projects[i]; // Récupération des infos du projet
-            console.log(infos); // Log en console pour débogage
+        for (let i = 0; i < projects.length; i++) {
+            const infos = projects[i];
+            const creationDate = formatDate(infos.created_at); // Conversion de la date
 
-            // Mise à jour du titre et de la description du projet dans le DOM
-            this.projectsTitle[htmlIndex].textContent = infos.name;
-            this.projectsDescription[htmlIndex].textContent = infos.description;
+            // Mise à jour du titre et de la description
+            this.projectsTitle[i].textContent = infos.name;
+            this.projectsDescription[i].textContent = infos.description || 'Aucune description.';
 
-            try {
-                // Appel API pour récupérer les langages utilisés dans ce dépôt
-                const languages = await fetch(infos.languages_url).then(res => res.json());
-
-                // Extraction des noms de langages (JavaScript, HTML, etc.)
-                const tags = Object.keys(languages).join(", ");
-                this.projectsTagsContainer[htmlIndex].textContent = tags;
-            } catch (err) {
-                // En cas d’erreur dans la récupération des langages
-                console.error("Erreur lors de la récupération des languages:", err);
-                this.projectsTagsContainer[htmlIndex].textContent = "Langages non disponibles";
+            // Affichage de la date de création si la balise est présente
+            if (dateElements[i]) {
+                dateElements[i].textContent = `Créé le ${creationDate}`;
             }
 
-            htmlIndex++; // Passage à l’élément HTML suivant
+             // Sélectionne le bon lien dans le même <li>
+            const projectItem = this.projectsTitle[i].closest("li");
+            const link = projectItem?.querySelector('a[href="/projet.html"]');
+            if (link) {
+                link.href = `/projet.html?repo=${encodeURIComponent(infos.name)}`;
+            }
+
+            try {
+                // Appel de l’API GitHub pour récupérer les langages utilisés
+                const response = await fetch(infos.languages_url);
+                if (!response.ok) throw new Error("Erreur HTTP");
+
+                const languages = await response.json();
+
+                // Création des balises "tags" dynamiques avec pastilles colorées
+                this.projectsTagsContainer[i].innerHTML = Object.keys(languages).map(lang => {
+                    return `<span class="tag-lang">
+                        <span class="dot" style="background-color:${getColorForLang(lang)};"></span>
+                        ${lang}
+                    </span>`;
+                }).join("");
+            } catch (err) {
+                // Gestion d’erreur lors de la récupération des langages
+                console.error("Erreur lors de la récupération des langages :", err);
+                this.projectsTagsContainer[i].textContent = "Langages non disponibles";
+            }
         }
     }
 }
 
-// Export de la classe Home pour pouvoir l’utiliser dans d’autres fichiers
+// Fonction qui retourne une couleur selon le nom du langage (pour les pastilles de tags)
+function getColorForLang(lang) {
+    const colors = {
+        JavaScript: "#f1e05a",
+        HTML: "#e34c26",
+        CSS: "#563d7c",
+        Python: "#3572A5",
+        TypeScript: "#2b7489",
+        PHP: "#4F5D95",
+        Shell: "#89e051",
+        Dockerfile: "#384d54"
+    };
+    return colors[lang] || "#ccc"; // Gris par défaut si langage inconnu
+}
+
+// Fonction de formatage de date au format français (ex : 02 juin 2025)
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: '2-digit' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', options);
+}
+
+// Export de la classe pour l’utiliser ailleurs dans l’application (ex: dans app.js)
 export { Home };
- 

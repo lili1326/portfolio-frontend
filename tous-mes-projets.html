@@ -1,11 +1,46 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Découvrir tous mes projets: Portfolio de Aurélie</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Découvrir tous mes projets: Portfolio de Aurélie</title>
 </head>
 <body>
-    <h1>Tous mes projets</h1>
+  <h1>Tous mes projets</h1>
+   <a href="/index.html">
+        Acceuil
+        <img src="assets/icons/arrow-right-line.svg" alt="arrow" width="20px">    
+    </a>
+
+  <ul class="js-projects-list">
+    <!-- Les projets seront ajoutés ici dynamiquement -->
+  </ul>
+
+  <script type="module">
+    async function afficherProjets() {
+      const listElement = document.querySelector('.js-projects-list');
+      try {
+        const response = await fetch("https://api.github.com/users/lili1326/repos");
+        const data = await response.json();
+
+        // Pour chaque projet
+        data.forEach(repo => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <strong>${repo.name}</strong><br>
+            ${repo.description || 'Pas de description'}<br>
+            <a href="${repo.html_url}" target="_blank">Voir sur GitHub</a>
+            <hr>
+          `;
+          listElement.appendChild(li);
+        });
+      } catch (error) {
+        listElement.innerHTML = "<li>Erreur de chargement des projets.</li>";
+        console.error(error);
+      }
+    }
+
+    afficherProjets();
+  </script>
 </body>
 </html>

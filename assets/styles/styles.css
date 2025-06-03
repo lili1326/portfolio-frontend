@@ -1,0 +1,111 @@
+ 
+ /* Général */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
+  margin: 0;
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+header {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+header a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Section principale */
+main section {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+/* Avatar GitHub */
+.js-home-avatar {
+  border-radius: 10px;
+  margin-top: 10px;
+  max-width: 100px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Projets */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin: 0.3rem 0;
+}
+
+.js-home-project-description {
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.js-home-project-date {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+/* Langage tags */
+.tag-lang {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.6rem;
+  margin-bottom: 0.4rem;
+  padding: 0.2rem 0.5rem;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
